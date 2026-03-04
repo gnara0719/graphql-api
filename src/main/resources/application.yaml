@@ -1,1 +1,49 @@
-spring.application.name=graphql-api
+server:
+  port: 8080
+
+spring:
+  application:
+    name: graphql-api
+
+  # H2 Database ??
+  datasource:
+    url: jdbc:h2:mem:bookdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  # H2 Console (??? ???)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # JPA ??
+  jpa:
+    hibernate:
+      ddl-auto: create  # ??? ?? ??
+    show-sql: true      # SQL ?? ??
+    properties:
+      hibernate:
+        format_sql: true  # SQL ???
+
+  # GraphQL ?? ??
+  graphql:
+    # GraphiQL UI ???
+    graphiql:
+      enabled: true
+      path: /graphiql
+    # Schema ??
+    schema:
+      locations: classpath:graphql/
+      file-extensions: .graphqls
+    # CORS ??
+    cors:
+      allowed-origins: "*"
+      allowed-methods: "*"
+
+# Logging
+logging:
+  level:
+    com.codeit.graphql: DEBUG
+    org.springframework.graphql: DEBUG

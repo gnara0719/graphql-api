@@ -1,0 +1,96 @@
+
+# 도서 타입
+type Book {
+    id: ID!
+    title: String!
+    isbn: String!
+    publishedYear: Float!
+    author: Author!
+    createAt: String!
+}
+
+# 저자 타입
+type Author {
+    id: ID!
+    name: String!
+    email: String!
+    books: [Book!]!
+}
+
+# 도서 입력 타입 (Mutation용)
+#type 이 서버가 클라이언트에게 주는 데이터라면  input은 클라이언트가 서버에게 보내는 데이터
+input CreateBookInput {
+    title: String!
+    isbn: String!
+    publishedYear: Int!
+    price: Float!
+    authorId: ID!
+}
+
+# 도서 수정 입력 타입
+input UpdateBookInput {
+    title: String
+    isbn: String
+    publishedYear: Int
+    price: Float
+    authorId: ID
+}
+
+# 저자 입력 타입
+input CreateAuthorInput {
+    name: String!
+    email: String!
+}
+
+# 저자 수정 입력 타입
+input UpdateAuthorInput {
+    name: String
+    email: String
+}
+
+type Query {
+    # 모든 도서 조회
+    books: [Book!]!
+
+    # ID로 도서 조회
+    book(id: ID!): Book
+
+    # 제목으로 도서 검색
+    searchBooks(title: String!): [Book!]!
+
+    # 모든 저자 조회
+    authors: [Author!]!
+
+    # ID로 저자 조회
+    author(id: ID!): Author
+
+    # 저자별 도서 조회
+    booksByAuthor(authorId: ID!): [Book!]!
+}
+
+# Mutation (생성, 수정, 삭제)
+type Mutation {
+    # 도서 생성
+    createBook(input: CreateBookInput!): Book!
+
+    # 도서 수정
+    updateBook(id: ID!, input: UpdateBookInput): Book!
+
+    # 도서 삭제
+    deleteBook(id: ID!): Boolean!
+
+    # 저자 생성
+    createAuthor(input: CreateAuthorInput!): Author!
+
+    # 저자 수정
+    updateAuthor(id: ID!, input: UpdateAuthorInput!): Author!
+
+    # 저자 삭제
+    deleteAuthor(id: ID!): Boolean!
+}
+
+# Subscription (실시간 업데이트)
+type Subscription {
+    bookAdded: Book!
+}
+
