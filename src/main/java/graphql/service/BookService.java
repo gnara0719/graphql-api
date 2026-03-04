@@ -2,6 +2,7 @@ package graphql.service;
 
 import graphql.entity.Author;
 import graphql.entity.Book;
+import graphql.exception.BookNotFoundException;
 import graphql.input.CreateBookInput;
 import graphql.input.UpdateBookInput;
 import graphql.repository.AuthorRepository;
@@ -45,7 +46,7 @@ public class BookService {
     public Book getBookById(Long id) {
         log.info("📖 도서 조회: ID={}", id);
         return bookRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("도서를 찾을 수 없습니다: " + id));
+                .orElseThrow(() -> new BookNotFoundException(id));
     }
 
     /**
