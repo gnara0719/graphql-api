@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 
 /**
- * GrephQL Query Resolver
+ * GraphQL Query Resolver
  * 데이터 조회를 처리합니다.
  */
 @Controller
@@ -29,8 +29,8 @@ public class QueryResolver {
      *
      * @return List<Book>
      */
-    @QueryMapping
-    public List<Book> books() {
+    @QueryMapping(name=  "books")
+    public List<Book> getAllBooks() {
         log.info("GraphQL Query: books");
         return bookService.getAllBooksWithAuthor();
     }
@@ -41,8 +41,8 @@ public class QueryResolver {
      * @return Book
      */
     @QueryMapping
-    public Book Book(@Argument Long id) {
-        log.info("GraphQL Query: Book");
+    public Book book(@Argument Long id) {
+        log.info("GraphQL Query: book");
         return bookService.getBookById(id);
     }
 
@@ -78,12 +78,12 @@ public class QueryResolver {
 
     /**
      * 저자별 도서 조회
-     * @param id
+     * @param authorId
      * @return List<Book>
      */
     @QueryMapping
-    public List<Book> booksByAuthor(@Argument Long id) {
-        log.info("GraphQL Query: booksByAuthor(authorId={})", id);
-        return bookService.getBooksByAuthor(id);
+    public List<Book> booksByAuthor(@Argument Long authorId) {
+        log.info("GraphQL Query: booksByAuthor(authorId={})", authorId);
+        return bookService.getBooksByAuthor(authorId);
     }
 }
