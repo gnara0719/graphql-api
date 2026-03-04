@@ -114,4 +114,8 @@ public class AuthorService {
 
         return true;
     }
+
+    public List<Author> findAllById(List<Long> authorIds) {
+        return authorRepository.findAllById(authorIds);
+    }
 }

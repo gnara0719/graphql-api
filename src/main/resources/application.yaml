@@ -5,39 +5,41 @@ spring:
   application:
     name: graphql-api
 
-  # H2 Database ??
+  # H2 Database 설정
   datasource:
     url: jdbc:h2:mem:bookdb
     driver-class-name: org.h2.Driver
     username: sa
     password:
 
-  # H2 Console (??? ???)
+  # H2 Console (데이터 확인용)
   h2:
     console:
       enabled: true
       path: /h2-console
 
-  # JPA ??
+  # JPA 설정
   jpa:
     hibernate:
-      ddl-auto: create  # ??? ?? ??
-    show-sql: true      # SQL ?? ??
+      ddl-auto: create  # 테이블 자동 생성
+    show-sql: true      # SQL 로그 출력
     properties:
       hibernate:
-        format_sql: true  # SQL ???
+        format_sql: true  # SQL 포맷팅
 
-  # GraphQL ?? ??
+  # GraphQL 설정 ⭐️
   graphql:
-    # GraphiQL UI ???
+    # GraphiQL UI 활성화
     graphiql:
       enabled: true
       path: /graphiql
-    # Schema ??
+    websocket:
+      path: /graphql
+    # Schema 위치
     schema:
-      locations: classpath:graphql/
+      locations: classpath*:graphql/
       file-extensions: .graphqls
-    # CORS ??
+    # CORS 설정
     cors:
       allowed-origins: "*"
       allowed-methods: "*"

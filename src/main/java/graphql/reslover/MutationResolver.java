@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -22,6 +21,7 @@ public class MutationResolver {
 
     private final BookService bookService;
     private final AuthorService authorService;
+    private final BookSubscriptionResolver bookSubscriptionResolver;
 
     /**
      * 도서 생성
@@ -29,7 +29,12 @@ public class MutationResolver {
     @MutationMapping
     public Book createBook(@Argument CreateBookInput input) {
         log.info("GraphQL Mutation: createBook");
-        return bookService.createBook(input);
+        Book book = bookService.createBook(input);
+
+        // 이벤트 발행
+        bookSubscriptionResolver.publishBookAdded(book);
+
+        return book;
     }
 
     /**

@@ -34,8 +34,8 @@ public class BookService {
      */
     public List<Book> getAllBooksWithAuthor() {
         log.info("📚 모든 도서 조회 (저자 포함)");
-//        return bookRepository.findAllWithAuthor();
-        return bookRepository.findAll();
+        return bookRepository.findAllWithAuthor();
+//        return bookRepository.findAll();
     }
 
 
